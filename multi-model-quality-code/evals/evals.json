@@ -1,0 +1,32 @@
+{
+  "skill_name": "multi-model-quality-code",
+  "evals": [
+    {
+      "id": 1,
+      "name": "production-code-review",
+      "prompt": "I have this authentication middleware that's going into production. I want to be really sure it's secure and handles edge cases properly. How should I approach reviewing this code? What models should I use and in what order?",
+      "expected_output": "Structured review workflow using Opus (depth) + o3 (verification) + Sonnet (synthesis). Cost estimate (~$1.50). Specific prompt templates for security focus.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "large-codebase-analysis",
+      "prompt": "We're trying to understand the architecture of our entire backend codebase (about 80K lines spread across 15 microservices). It's a mix of Go and Python. Which AI model should I use to analyze this efficiently? What's the workflow?",
+      "expected_output": "Recommend Gemini 2.5-Pro (1M context) as primary. Explain why it's better than Opus (saves 5+ iterations). Include cost comparison and prompt template.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "security-audit-critical",
+      "prompt": "We need to security audit our payment processing code before going live. This is critical - we handle credit cards. Money. Real stakes. What's the best multi-model approach? How do I use o3, Opus, and Gemini together to catch everything?",
+      "expected_output": "Paranoia-mode workflow: Opus (vulnerabilities) → o3 (adversarial thinking) → Gemini (architecture). Cost $2-3 justified for stakes. Prompt templates for each. Consensus checklist.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "refactoring-decision",
+      "prompt": "Should we refactor this legacy monolith or rebuild? It's 200K lines, 10 years old, works but unmaintainable. How do I use multiple models to make a good decision on this architecture question?",
+      "expected_output": "Opus (deep architecture thinking) + Gemini (extended thinking with 1M context to analyze full codebase) + Sonnet (quick validation). Cost $1-1.50. Decision framework with synthesis approach."
+    }
+  ]
+}

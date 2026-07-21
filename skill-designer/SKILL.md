@@ -1,6 +1,6 @@
 ---
 name: skill-designer
-description: Use when the user asks to create a new skill, design a skill, or needs help structuring a superpowers skill — before writing any skill content. Triggers on requests like "create a skill for X", "help me design a skill", "I want a skill that does Y".
+description: Use when designing a NON-TRIVIAL skill that needs an interview + structure decisions before writing content. Triggers on "design a skill", "help me design a skill", "I want a skill that does Y", "help me structure a skill". For a quick name+purpose scaffold (no interview) use new-skill instead; for eval/benchmark-driven creation or optimization use the skill-creator plugin (skill-creator:skill-creator).
 ---
 
 # Skill Designer

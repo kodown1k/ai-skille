@@ -1,6 +1,6 @@
 ---
 name: new-skill
-description: Use when the user wants to create a new skill, asking only for a name and purpose. Use when user says "create a skill", "new skill", "stwórz skill", "nowy skill", or describes functionality they want to automate for Claude.
+description: Use for a FAST minimal skill scaffold from just a name + purpose (no interview). Triggers: "create a skill", "new skill", "stwórz skill", "nowy skill", or a quick "automate X for Claude". For a NON-TRIVIAL skill that needs an interview + structure decisions use skill-designer instead; for eval/benchmark-driven creation or optimization use the skill-creator plugin (skill-creator:skill-creator).
 ---
 
 # New Skill Creator

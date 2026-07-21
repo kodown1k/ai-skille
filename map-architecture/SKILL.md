@@ -1,6 +1,6 @@
 ---
 name: map-architecture
-description: Use when starting work on a new project, when ARCHITECTURE.md is missing or outdated, when the user says "map architecture", "zmapuj architekturę", "przeskanuj projekt", "stwórz mapę projektu", "zaktualizuj architekturę", "update architecture", "scan project structure", "what modules does this project have", "jakie moduły ma ten projekt". Also use proactively when ARCHITECTURE.md doesn't exist and user asks about project structure.
+description: Use when starting work on a new project, when ARCHITECTURE.md is missing or outdated, when the user says "map architecture", "zmapuj architekturę", "przeskanuj projekt", "stwórz mapę projektu", "zaktualizuj architekturę", "update architecture", "scan project structure", "what modules does this project have", "jakie moduły ma ten projekt". Also use proactively when ARCHITECTURE.md doesn't exist and user asks about project structure. NOT for the machine-oriented .claude/project-context.md (use scan-project), a conventions/patterns guide (use find-patterns → PATTERNS.md), or per-module docs (use doc-gen-entry → __docs/); map-architecture produces ARCHITECTURE.md — a navigation map of modules/services.
 argument-hint: [optional: specific area to focus on, e.g. "admin-api" or "only new modules"]
 ---
 

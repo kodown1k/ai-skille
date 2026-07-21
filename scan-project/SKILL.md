@@ -1,6 +1,6 @@
 ---
 name: scan-project
-description: Use when starting work on a project, before implementing any new feature, or when codebase context is missing. Trigger when user says "scan project", "przeskanuj projekt", "przeanalizuj projekt", "analyze codebase", "what's the stack here", "help me understand this project", "zanim zaczniemy", or when implementing a feature and .claude/project-context.md doesn't exist yet. Always use this skill proactively before feature implementation if .claude/project-context.md is absent.
+description: Use when starting work on a project, before implementing any new feature, or when codebase context is missing. Trigger when user says "scan project", "przeskanuj projekt", "przeanalizuj projekt", "analyze codebase", "what's the stack here", "help me understand this project", "zanim zaczniemy", or when implementing a feature and .claude/project-context.md doesn't exist yet. Always use this skill proactively before feature implementation if .claude/project-context.md is absent. NOT for a human-readable module/service map (use map-architecture → ARCHITECTURE.md), a patterns/conventions guide (use find-patterns → PATTERNS.md), or per-module doc generation (use doc-gen-entry → __docs/); scan-project writes the machine-oriented .claude/project-context.md consumed by feature-implementation skills.
 ---
 
 # Scan Project — System Architect Analysis

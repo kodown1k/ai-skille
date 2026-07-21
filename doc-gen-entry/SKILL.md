@@ -1,6 +1,6 @@
 ---
 name: doc-gen-entry
-description: Use when user invokes /doc-gen-entry or wants to generate complete project documentation by scanning the codebase, building a checklist of modules/features, and dispatching subagents per item.
+description: Use when user invokes /doc-gen-entry or wants to generate complete project documentation by scanning the codebase, building a checklist of modules/features, and dispatching subagents per item. NOT for a single architecture map or patterns guide (use map-architecture → ARCHITECTURE.md, find-patterns → PATTERNS.md, or scan-project → .claude/project-context.md); doc-gen-entry fans out subagents to generate per-module documentation under __docs/.
 ---
 
 # Doc-Gen Entry

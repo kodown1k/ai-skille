@@ -20,6 +20,7 @@ Reusable Claude Code skills. Each directory is one skill — `SKILL.md` (the log
 | [`planista-wynalazca`](./planista-wynalazca/) | Planner aiming for the non-obvious solution — one-question-at-a-time discovery → anti-default divergence → triage → scoring → plan starting from the cheapest hypothesis test. |
 | [`agent-planner`](./agent-planner/) | From a document (PRD/spec/plan) designs a team of parallel implementation agents + ready-to-use prompts. |
 | [`doc-gen-entry`](./doc-gen-entry/) | Generates full project documentation — module checklist → one subagent per item. |
+| [`styl-ustroj`](./styl-ustroj/) | Styl „ustrój” dla depesz i raportów o organizmie floty w ai-review-panel — jasny motyw `jawa` i ciemny `sen`, infografiki HTML/CSS, które przelewają się na telefonie; szablon, CSS, przełącznik motywu, przykład (raport 754). |
 
 ## Installation
 

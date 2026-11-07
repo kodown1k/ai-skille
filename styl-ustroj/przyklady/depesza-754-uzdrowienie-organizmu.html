@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Depesza: uzdrowienie organizmu floty — plan, wykonanie, pomiar</title>
+<style>
+:root{--ground:#F4EFE6;--surface:#FFFDF8;--ink:#1E2228;--muted:#5C6670;--line:#D9D2C5;
+ --tetno:#0E8A6E;--tetno-soft:#DDF0E9;--bol:#C2410C;--brak:#B42318;--nerw:#2F5D9A;--nerw-soft:#E3ECF7;--gest:#B7791F;--none:transparent;
+ --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Times New Roman",serif;
+ --mono:ui-monospace,"JetBrains Mono",Menlo,Consolas,"Liberation Mono",monospace;}
+html[data-motyw="sen"]{--ground:#0B1217;--surface:#121C23;--ink:#E8E4DB;--muted:#93A0AA;--line:#253039;
+ --tetno:#3DDBB0;--tetno-soft:#10352D;--bol:#FF8A4C;--brak:#FF6B6B;--nerw:#7FB2FF;--nerw-soft:#15263A;--gest:#F2C14E;}
+@media (prefers-color-scheme: dark){html:not([data-motyw="jawa"]){--ground:#0B1217;--surface:#121C23;--ink:#E8E4DB;--muted:#93A0AA;--line:#253039;
+ --tetno:#3DDBB0;--tetno-soft:#10352D;--bol:#FF8A4C;--brak:#FF6B6B;--nerw:#7FB2FF;--nerw-soft:#15263A;--gest:#F2C14E;}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ground);color:var(--ink)}
+body{font:17px/1.6 var(--serif);padding:24px 16px 64px;max-width:860px;margin-inline:auto}
+a{color:var(--nerw)}
+h1{font-size:2rem;line-height:1.15;margin:.3rem 0 .6rem;font-weight:600;letter-spacing:-.01em}
+h2{font-size:1.35rem;margin:0 0 .3rem;font-weight:600}
+h3{font-size:1.05rem;margin:1.2rem 0 .3rem;font-weight:600}
+p{margin:.55rem 0}
+.mono,code,.t-mono{font-family:var(--mono)}
+code{font-size:.9em;background:color-mix(in srgb,var(--line) 45%,transparent);padding:0 .3em;border-radius:4px}
+.small{font-size:.9rem;color:var(--muted)}
+.lead{font-size:1.1rem;color:var(--muted)}
+.pasek{display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:var(--mono);font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.pasek button{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+.depesza{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:14px 0 22px;display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;font-size:.95rem}
+.depesza dt{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+.depesza dd{margin:0}
+.odczyt{margin:34px 0 0}
+.odczyt .num{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;color:var(--tetno);text-transform:uppercase}
+.odczyt .pod{color:var(--muted);font-style:italic;margin:.1rem 0 .8rem}
+.kanal{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.82rem;margin:.6rem 0 1rem}
+.kanal b{display:block;font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.zapis{border-left:4px solid var(--tetno);background:var(--surface);padding:10px 14px;margin:.9rem 0;font-family:var(--mono);font-size:.84rem;line-height:1.55;border-radius:0 10px 10px 0;overflow-x:auto}
+.zapis .tyt{color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;margin-bottom:4px}
+.lustro{border:1px dashed var(--line);border-radius:12px;padding:10px 14px;margin:.9rem 0;font-size:.95rem}
+.lustro b{font-family:var(--mono);font-weight:500;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block}
+.wnosi{border-top:2px solid var(--tetno);margin-top:1rem;padding-top:.6rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem;margin:.6rem 0}
+td,th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-weight:500;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stan{font-family:var(--mono);font-size:.76rem;padding:2px 8px;border-radius:999px;border:1px solid var(--line)}
+.stan-ok{color:var(--tetno);border-color:var(--tetno)} .stan-czeka{color:var(--gest);border-color:var(--gest)}
+.kropka{display:inline-block;width:.75em;height:.75em;border-radius:50%;border:1.5px solid var(--ink);margin-right:.45em;vertical-align:-.05em}
+.k-dowod{background:var(--tetno)} .k-ruch{background:var(--gest)} .k-brak{background:var(--brak)} .k-niezmierzone{background:transparent}
+.info{width:100%;height:auto;display:block;margin:.8rem 0 1rem;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px}
+.puls{width:100%;height:24px;display:block;margin:1.4rem 0 0}
+/* klasy SVG */
+.f-surface{fill:var(--surface)} .f-ink{fill:var(--ink)} .f-tetno{fill:var(--tetno)} .f-tetno-soft{fill:var(--tetno-soft)} .f-brak{fill:var(--brak)} .f-gest{fill:var(--gest)} .f-nerw{fill:var(--nerw)} .f-nerw-soft{fill:var(--nerw-soft)} .f-none{fill:transparent}
+.s-line{stroke:var(--line)} .s-ink{stroke:var(--ink)} .s-tetno{stroke:var(--tetno)} .s-brak{stroke:var(--brak)} .s-nerw{stroke:var(--nerw)} .s-gest{stroke:var(--gest)}
+.t-label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;fill:var(--ink)}
+.t-mono{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.t-small{font-family:var(--serif);font-size:11px;fill:var(--ink)}
+.t-big{font-family:var(--mono);font-size:44px;font-weight:600;fill:var(--ink)}
+.t-big2{font-family:var(--serif);font-size:22px;font-weight:600;fill:var(--ink)}
+.fo-small{font:12px/1.25 var(--serif);color:var(--ink)}
+.stopka{margin-top:40px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);padding-top:10px}
+
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:.8rem 0 1rem}
+.dnode{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:6px 0}
+.dnode b,.dwall b,.cialo b,.wtekst b{display:block;font-family:var(--mono);font-weight:500;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dnode span,.dwall span{display:block;font-size:.92rem}
+.dnode.okno{border-color:var(--tetno);background:var(--tetno-soft)}
+.dnode.side{border-style:dashed}
+.dwalls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+.dwall{border:2px dashed var(--brak);border-radius:10px;padding:8px 10px;font-size:.88rem}
+.dwall b{color:var(--brak)}
+.darrow{text-align:center;font-family:var(--mono);font-size:.8rem;color:var(--tetno);margin:4px 0}
+.dout{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.dchip{border:1px solid var(--tetno);color:var(--ink);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.oscz{list-style:none;margin:.8rem 0 1rem;padding:0 0 0 14px;border-left:2px solid var(--line)}
+.oscz li{position:relative;margin:0 0 10px;padding-left:18px}
+.oscz li::before{content:"";position:absolute;left:-21px;top:.45em;width:12px;height:12px;border-radius:50%;background:var(--ink);border:2px solid var(--surface)}
+.oscz li.tetno::before{background:var(--tetno)} .oscz li.brak::before{background:var(--brak)}
+.oscz .t{display:block;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.oscz .l{display:block;font-size:.95rem}
+.ciala{display:grid;grid-template-columns:3fr 2fr;gap:10px}
+.cialo{border:1px solid var(--line);border-radius:12px;padding:10px}
+.sesje{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.ses{display:inline-flex;flex-direction:column;border:1px solid var(--ink);border-radius:10px;padding:6px 10px;font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;min-width:120px}
+.ses small{text-transform:none;letter-spacing:0;font-family:var(--serif);font-size:.82rem;color:var(--muted)}
+.ses.s0{border-color:var(--tetno);background:var(--tetno-soft)}
+.szyna{border:1px solid var(--nerw);background:var(--nerw-soft);border-radius:999px;text-align:center;padding:8px 12px;font-family:var(--mono);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.flow{margin-top:10px;font-family:var(--mono);font-size:.78rem;line-height:1.6;color:var(--muted)}
+.flow b{color:var(--ink);font-weight:500;letter-spacing:.08em}
+.tablica{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:.8rem 0 1rem}
+.cell{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:84px}
+.cell b{font-family:var(--mono);font-weight:500;font-size:.8rem;margin-right:6px}
+.cell .st{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cell p{margin:.3rem 0 0;font-size:.9rem;line-height:1.3}
+.cell.c-ruch{border-color:var(--gest)} .cell.c-dowod{border-color:var(--tetno)} .cell.c-brak{border-color:var(--brak)}
+.werdykt{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin:.8rem 0 1rem}
+.ring{width:200px;height:200px}
+.wtekst h3{margin:.2rem 0 .3rem;font-size:1.25rem}
+@media (max-width:640px){.dwalls{grid-template-columns:1fr}.ciala{grid-template-columns:1fr}.tablica{grid-template-columns:1fr 1fr}.werdykt{grid-template-columns:1fr;justify-items:center}.wtekst{justify-self:stretch}}
+
+@media (max-width:640px){body{font-size:16px;padding:16px 12px 48px}.depesza{grid-template-columns:1fr}.kanal{grid-template-columns:1fr 1fr}h1{font-size:1.55rem}}
+</style>
+</head>
+<body>
+<div class="pasek"><span>depesza · styl ustrój</span><button id="motyw" type="button">motyw</button></div>
+<h1>Uzdrowienie organizmu floty</h1>
+<p class="lead">Jak powstał plan, co zrobiono naprawdę i czy organizm jest już w pełni zdrowy. Depesza ze stacji zdalnej — sesji, która widziała flotę tylko przez jedno okno.</p>
+
+<dl class="depesza">
+ <dt>Nadawca</dt><dd>stacja zdalna — sesja Claude w chmurze, prowadzona z telefonu właściciela, wieczór 7 listopada 2026</dd>
+ <dt>Adresat</dt><dd>właściciel floty</dd>
+ <dt>Dotyczy</dt><dd>zlecenie „zebrać raporty o organizmie floty, zapisać odnośniki w repo, zaplanować i doprowadzić organizm do pełnego zdrowia; prace w kilku sesjach przez cc-panel i szynę; wszystko przez MR, recenzję, uproszczenie i scalenie; bez pytań”</dd>
+ <dt>Źródła</dt><dd>raporty 725 „Organizm floty”, 731 skrót, 735 „Mapa floty”, 734 „Doskonała próżnia floty” i 13 raportów źródłowych; lustra GitHub repo thalamos, mcp-hub, ai-review-panel; cc.kodownik.co</dd>
+ <dt>Stan na</dt><dd>7.11.2026, 20:15 (cc-panel 20:15, mapa floty 20:08)</dd>
+</dl>
+
+<svg class="puls" viewBox="0 0 760 24" aria-hidden="true"><polyline points="0,12 300,12 318,12 326,3 334,21 342,6 350,12 760,12" fill="none" class="s-tetno" stroke-width="2"/></svg>
+<section class="odczyt">
+ <div class="num">Odczyt 1</div>
+ <h2>Skąd stacja patrzyła</h2>
+ <p class="pod">Trzy ściany i jedno okno: plan powstał z tego, co dało się zobaczyć, nie z tego, co chciałoby się zobaczyć.</p>
+ <div class="kanal"><div><b>Nadawca</b>stacja zdalna</div><div><b>Odbiorca</b>właściciel</div><div><b>Kanał</b>Chrome właściciela</div><div><b>Opóźnienie</b>19:10 → 19:26, zanim otworzyło się okno</div></div>
+ <p>Stacja zdalna nie stoi we flocie. Nie widzi huba, GitLaba ani panelu raportów: pierwsze żądanie do <code>ai-review-panel.kodownik.co</code> odbiło się od <code>robots.txt</code>, a każde następne — od proxy, które przepuszcza tylko rejestry pakietów i GitHub. Z GitHuba przyszły lustra trzech repozytoriów i z nich stacja poznała słownik floty: szynę, <code>bus-watch</code>, orkiestratora i rozkazy, cztery ciała thalamosa. Dopiero okno — Twoja przeglądarka, wskazana jednym tapnięciem — pokazało raporty i panel sesji.</p>
+ 
+<div class="diagram sciany">
+ <div class="dnode start"><b>STACJA ZDALNA</b><span>sesja w chmurze, z telefonu · bez dostępu do kodownik.co</span></div>
+ <div class="dwalls">
+  <div class="dwall"><b>ŚCIANA 1</b><span>robots.txt + proxy 403: panel raportów, hub, GitLab</span></div>
+  <div class="dwall"><b>ŚCIANA 2</b><span>odmowa platformy: sesji na maszynach właściciela nie zakłada się z chmury</span></div>
+  <div class="dwall"><b>ŚCIANA 3</b><span>GitLab w Chrome wylogowany; haseł stacja nie wpisuje</span></div>
+ </div>
+ <div class="darrow">↓ jedno okno</div>
+ <div class="dnode okno"><b>OKNO · CHROME WŁAŚCICIELA</b><span>Browser 1, wskazany jednym tapnięciem</span></div>
+ <div class="dout">
+  <div class="dchip">odczyt raportów 725 · 731 · 735 · 734</div>
+  <div class="dchip">cc-panel: 10 środowisk, żywe sesje</div>
+  <div class="dchip">171 raportów projektu 8 → 19 o flocie</div>
+ </div>
+ <div class="dnode side"><b>LUSTRA GITHUB</b><span>thalamos · mcp-hub · ai-review-panel — słownik floty: szyna, bus-watch, orkiestrator, cztery ciała</span></div>
+</div>
+ <div class="zapis"><div class="tyt">Zapis nasłuchu · co dało się zmierzyć z zewnątrz</div>
+WebFetch 731 → robots_disallowed · curl hub/panel → CONNECT 403 (egress) · GitHub: 52 repo, lustra thalamos (06.11), mcp-hub (21.10), ai-review-panel (01.11)<br>
+Chrome: 2 przeglądarki podpięte (Linux) → wybór właściciela: Browser 1 · panel raportów zalogowany · GitLab niezalogowany · cc-panel: 10 środowisk, 8 żywych sesji (19:27)<br>
+projekt 8 „kodowniki/reports”: 171 raportów · filtr flota|organizm|pamięć|szyna|… → 19 trafień · 4 z dziś: 725, 731, 734, 735</div>
+ <div class="lustro"><b>Lustro · horyzont zdarzeń</b>Raport 725 pisał o horyzoncie zdarzeń wokół ryzena: o upadku dowiaduje się tylko ktoś z zewnątrz. Stacja zdalna stała poza innym horyzontem — poza siecią floty — i widziała jej wnętrze wyłącznie przez okno przeglądarki. Lustro kłamie w jednym: horyzont ryzena jest fizyką, horyzont stacji jest zasadą, i to słuszną — sesja z chmury nie powinna sięgać do maszyn właściciela bez jego ręki.</div>
+</section>
+
+<svg class="puls" viewBox="0 0 760 24" aria-hidden="true"><polyline points="0,12 300,12 318,12 326,3 334,21 342,6 350,12 760,12" fill="none" class="s-tetno" stroke-width="2"/></svg>
+<section class="odczyt">
+ <div class="num">Odczyt 2</div>
+ <h2>Jak powstał plan</h2>
+ <p class="pod">Godzina od zlecenia do pięciu promptów, w jedenastu krokach, z dwiema ścianami po drodze.</p>
+ <div class="kanal"><div><b>Nadawca</b>raporty 725–735</div><div><b>Odbiorca</b>plan Z1–Z9</div><div><b>Kanał</b>lektura sekcjami</div><div><b>Opóźnienie</b>38 minut czytania, 10 minut pisania</div></div>
+ <ol class="oscz"><li class=""><span class="t">19:10</span><span class="l">zlecenie z telefonu: zebrać, zapisać, zaplanować, podzielić na sesje, scalić — bez pytań</span></li><li class="brak"><span class="t">19:12</span><span class="l">ściana 1: panel raportów za robots.txt, hub i GitLab za proxy</span></li><li class=""><span class="t">19:17</span><span class="l">lustra GitHub: thalamos, mcp-hub, ai-review-panel — flota = 4 ciała, szyna, bus-watch, orkiestrator</span></li><li class="tetno"><span class="t">19:26</span><span class="l">okno: właściciel wskazuje Browser 1; raport 731 przeczytany</span></li><li class=""><span class="t">19:31</span><span class="l">171 raportów projektu 8 → 19 o flocie; 725 (112 tys. znaków) czytany sekcjami, potem 735 i 734</span></li><li class=""><span class="t">19:40</span><span class="l">cc.kodownik.co = cc-panel: 10 środowisk, 8 żywych sesji</span></li><li class="tetno"><span class="t">19:48</span><span class="l">plan: Z1–Z9, stan na start, podział S0–S4, reguły, decyzje; pięć promptów</span></li><li class="brak"><span class="t">19:50</span><span class="l">ściana 2: platforma odmawia założenia sesji na maszynach właściciela</span></li><li class=""><span class="t">19:53</span><span class="l">strona z promptami i przyciskami „Nowa sesja w cc-panel” (artefakt)</span></li><li class="tetno"><span class="t">19:53–19:56</span><span class="l">właściciel uruchamia S0, S2, S3, S1, S4 na Fable 5.1 / 1 mln</span></li><li class="tetno"><span class="t">19:57</span><span class="l">cc-panel: 5 × PRACUJE</span></li><li class="tetno"><span class="t">20:08</span><span class="l">mapa floty: owijki z-bolem na złomie 7/9, ryzen bez wiersza „bez owijki”, timer kworum na ryzenie</span></li><li class=""><span class="t">20:15</span><span class="l">cc-panel: 4 × PRACUJE, S1 CZEKA; ta depesza</span></li></ol>
+ <p>Plan nie wymyśla luk. Bierze dwadzieścia trzy luki z raportu 725, czternaście mechanizmów nocy z odczytu 3 skrótu i białe plamy mapy 735, i zamienia je w <strong>dziewięć kryteriów odbioru</strong> — każde z dowodem, który da się zmierzyć bez czytania transkryptu: <code>bin/bramki</code> zielone, nerw na mapie z dowodem, zero linii crona bez owijki, diagnostyka startu bez „ROZJAZD”, wpis w <code>docs/luki.md</code> z datą i licznikiem. Poza planem zostało sześć decyzji właściciela z kody raportu 725: replika huba, sprzeciw szyny, pułapki, Czytelnia, pilot wzgórza, pełne odtworzenie kopii. Sesje mają je opisać w <code>DECYZJE.md</code>, nie podjąć.</p>
+ <div class="tablica"><div class="cell c-ruch"><span class="kropka k-ruch"></span><b>Z1</b><span class="st">w ruchu</span><p>14 mechanizmów działa w ciele</p></div><div class="cell c-niezmierzone"><span class="kropka k-niezmierzone"></span><b>Z2</b><span class="st">nie zmierzono</span><p>hub: wiek faktów i ból szyny (MR !59)</p></div><div class="cell c-ruch"><span class="kropka k-ruch"></span><b>Z3</b><span class="st">w ruchu</span><p>ryzen czuwa nad złomem; kolejka i kworum na obu ciałach</p></div><div class="cell c-ruch"><span class="kropka k-ruch"></span><b>Z4</b><span class="st">w ruchu</span><p>każda linia crona z owijką z-bolem</p></div><div class="cell c-niezmierzone"><span class="kropka k-niezmierzone"></span><b>Z5</b><span class="st">nie zmierzono</span><p>brama grafu w settings.json złoma</p></div><div class="cell c-niezmierzone"><span class="kropka k-niezmierzone"></span><b>Z6</b><span class="st">nie zmierzono</span><p>luki priorytetu 3 z mechanizmem i testem</p></div><div class="cell c-niezmierzone"><span class="kropka k-niezmierzone"></span><b>Z7</b><span class="st">nie zmierzono</span><p>luki priorytetu 4: mechanizm albo zmierzony powód</p></div><div class="cell c-niezmierzone"><span class="kropka k-niezmierzone"></span><b>Z8</b><span class="st">nie zmierzono</span><p>rdzeń mówi prawdę</p></div><div class="cell c-ruch"><span class="kropka k-ruch"></span><b>Z9</b><span class="st">w ruchu</span><p>stan widoczny bez transkryptów</p></div></div>
+ <div class="zapis"><div class="tyt">Zapis nasłuchu · z czego plan jest zrobiony</div>
+725: 10 seansów, 23 luki (L1–L23), 14 mechanizmów: 8 WDROŻONE · 6 CZĘŚCIOWO (L2, L3 w MR !59; L4, L4b, L5, L11 czekają na gest) · 12 otwartych (L9, L12, L14–L23)<br>
+731 odczyt 5: 6 gestów (merge !59, 3 instalacje na ryzenie, brama grafu w settings.json, owijki crontabów, bramka pułapek, zdanie rdzenia) · 6 decyzji<br>
+735 (19:08): 17 nerwów — 13 z dowodem, 1 BRAK DOWODU (sonda sąsiada), 3 włókna · 13/13 i 9/9 linii crona bez owijki · 36/72 i 6/10 kontenerów bez sondy zdrowia<br>
+734: P1–P8 — przyjęte do planu tylko P5 (gest zapisany tam, gdzie odmówiła bramka: ~/.local/state/gesty/&lt;host&gt;/)</div>
+ <p>Podział na sesje poszedł po ciałach i po repozytoriach, nie po lukach: to, co trzeba zrobić <em>na ryzenie</em>, robi sesja na ryzenie; to, co zmienia hub, robi sesja w <code>mcp-hub</code>; pamięć i bramki złoma — sesja w <code>claude-config</code>; recenzję i scalanie trzyma jedna stacja na złomie z uzbrojonym <code>bus-watch</code>, żeby każdy meldunek docierał od razu, a nie „przy najbliższej turze”.</p>
+ 
+<div class="diagram topo">
+ <div class="ciala">
+  <div class="cialo"><b>ZŁOM · ciało wykonawcze</b>
+   <div class="sesje"><span class="ses s0">S0 stacja<small>bus-watch · recenzje · STATUS.md</small></span><span class="ses">S2 szyna<small>mcp-hub · MR !59 → L12 · L18 · L17</small></span><span class="ses">S3 kora<small>claude-config · gesty złoma · L14 · L21 · L19 · L9</small></span></div>
+  </div>
+  <div class="cialo"><b>RYZEN · ocean (hub, GitLab, Matrix)</b>
+   <div class="sesje"><span class="ses">S1 półkule<small>gesty ryzena · L15 próba · L23</small></span><span class="ses">S4 skóra<small>fleet-gate · L20</small></span></div>
+  </div>
+ </div>
+ <div class="darrow">↓ ↓ ↓ ↓ ↓ meldunki, claimy, fakty</div>
+ <div class="szyna">SZYNA mcp-hub · temat <code>organizm</code> · S0 nasłuchuje przez bus-watch</div>
+ <div class="flow"><b>KAŻDA ZMIANA</b> gałąź → MR (dowód · mechanizm · test ±) → recenzja drugim pomiarem (S0) → uproszczenie → scalenie → wiersz w STATUS.md<br><b>NIEODWRACALNE</b> net_intent(irreversible=true) przed merge do main huba · kopia przed settings.json i crontabem · test po · odmowa bramki = gest zapisany, nie obejście</div>
+</div>
+ <p>Trzy reguły, których nie wolno zmiękczyć: jeden MR to jedna luka albo jeden gest; nikt nie potwierdza cudzego MR-a bez własnego uruchomienia testu (reguła pierwsza szyny — milczenie nie jest zgodą); odmowa bramki albo klasyfikatora kończy ruch zapisem gestu, nigdy obejściem. Do tego reguły floty dla działań nieodwracalnych: <code>net_intent(irreversible=true)</code> przed merge do <code>main</code> huba, kopia przed każdą zmianą <code>settings.json</code> i crontaba, test po.</p>
+ <div class="lustro"><b>Lustro · drugi teleskop</b>Raport 725 porównał regułę pierwszą szyny do sygnału „Wow!”: jedna detekcja to nie odkrycie. Plan przenosi to do procesu scalania — S0 jest drugim teleskopem dla każdego MR-a. Lustro kłamie tam, gdzie S0 jest zajęta własnym MR-em: wtedy drugim teleskopem ma być inna sesja, nie czas.</div>
+</section>
+
+<svg class="puls" viewBox="0 0 760 24" aria-hidden="true"><polyline points="0,12 300,12 318,12 326,3 334,21 342,6 350,12 760,12" fill="none" class="s-tetno" stroke-width="2"/></svg>
+<section class="odczyt">
+ <div class="num">Odczyt 3</div>
+ <h2>Co zostało zrobione naprawdę</h2>
+ <p class="pod">Oddzielnie: ręka stacji zdalnej, ręka właściciela, ręce pięciu sesji — i to, czego nie zrobiono, z powodem.</p>
+ <div class="kanal"><div><b>Nadawca</b>stacja, właściciel, S0–S4</div><div><b>Odbiorca</b>flota</div><div><b>Kanał</b>strona z promptami, cc-panel, szyna</div><div><b>Opóźnienie</b>4 minuty od strony do pięciu sesji</div></div>
+ <h3>Stacja zdalna</h3>
+ <p>Zebrała odnośniki do 17 raportów i repozytoriów, napisała plan (Z1–Z9, stan na start, podział, reguły, decyzje) i pięć promptów, złożyła je w stronę z przyciskami „Kopiuj prompt” i „Nowa sesja w cc-panel” dla każdego środowiska, i napisała tę depeszę. Prompt S0 niesie w sobie pełną treść <code>ODNOSNIKI.md</code>, <code>PLAN.md</code> i promptów S1–S4 — bo repo <code>perun/organizm</code> leży za ścianą 3, więc pierwszy MR robi S0.</p>
+ <h3>Właściciel</h3>
+ <p>Uruchomił pięć sesji po kolei (19:53–19:56) na Fable 5.1 z oknem 1 mln tokenów. Jedno tapnięcie na sesję — dokładnie ten gest, którego stacja zdalna nie miała prawa wykonać.</p>
+ <h3>Sesje S0–S4 · cc-panel 20:15</h3>
+ <table><thead><tr><th>sesja</th><th>rola</th><th>ciało</th><th>start</th><th>kontekst</th><th>stan</th></tr></thead><tbody><tr><td class="mono">organizm-37</td><td>S0 stacja</td><td>złom</td><td class="mono">19:53</td><td class="mono">309 tys. z 1 mln</td><td><span class="stan stan-ok">PRACUJE</span></td></tr><tr><td class="mono">mcp-hub-24</td><td>S2 szyna</td><td>złom</td><td class="mono">19:54</td><td class="mono">306 tys. z 1 mln</td><td><span class="stan stan-ok">PRACUJE</span></td></tr><tr><td class="mono">organizm-50</td><td>S3 kora</td><td>złom</td><td class="mono">19:54</td><td class="mono">293 tys. z 1 mln</td><td><span class="stan stan-ok">PRACUJE</span></td></tr><tr><td class="mono">mcp-hub-76</td><td>S1 półkule</td><td>ryzen</td><td class="mono">19:55</td><td class="mono">253 tys. z 1 mln</td><td><span class="stan stan-czeka">CZEKA</span></td></tr><tr><td class="mono">fleet-gate-41</td><td>S4 skóra</td><td>ryzen</td><td class="mono">19:56</td><td class="mono">325 tys. z 1 mln</td><td><span class="stan stan-ok">PRACUJE</span></td></tr></tbody></table>
+ <div class="zapis"><div class="tyt">Zapis nasłuchu · mapa floty 20:08 wobec 19:08 (pomiar rejestru organów, nie meldunek sesji)</div>
+złom: linie crona bez owijki z-bolem 9/9 → <strong>2/9</strong> · ryzen: wiersz „13/13 bez owijki” zniknął z białych plam · ryzen: nowy timer pomysly-kworum (bez przebiegu) · nerw „sonda sąsiada”: nadal BRAK DOWODU (brak timera sonda-sasiada)<br>
+bez zmian: 36/72 i 6/10 kontenerów bez sondy zdrowia · legion nieosiągalny · 3 włókna bez pomiaru<br>
+S1 (mcp-hub-76, ryzen) od ok. 20:10 w stanie CZEKA — czeka na człowieka albo na odpowiedź z szyny; do sprawdzenia z telefonu („Otwórz w Claude”)</div>
+ <h3>Czego nie zrobiono — i dlaczego</h3>
+ <table><thead><tr><th>zlecenie</th><th>co się stało</th><th>kto domyka</th></tr></thead><tbody>
+ <tr><td>zapis odnośników w repo</td><td>GitLab za ścianą 1 (sandbox) i 3 (Chrome wylogowany); stacja nie wpisuje haseł</td><td>S0, pierwszy MR <code>zdrowie/plan</code></td></tr>
+ <tr><td>uruchomienie sesji z cc-panel</td><td>platforma odmówiła: „zadanie na własnym komputerze właściciela może założyć tylko sesja z tego komputera”; stacja nie obeszła odmowy przeglądarką</td><td>właściciel, 19:53–19:56 ✓</td></tr>
+ <tr><td>bus-watch do rozmowy z sesjami</td><td>stacja nie ma huba; nasłuch ma S0 na złomie</td><td>S0 ✓ (do potwierdzenia meldunkiem)</td></tr>
+ <tr><td>model opus lub sonnet</td><td>sesje wystartowały na Fable 5.1 (domyślny we flocie, okno 1 mln) — właściciel zaakceptował</td><td>—</td></tr>
+ </tbody></table>
+ <div class="lustro"><b>Lustro · ręka w pętli</b>Noc wdrożenia z 6/7.11 zatrzymała się na czterech ruchach, których klasyfikator nie pozwolił wykonać sesji; raport nazwał to częścią konstrukcji, nie awarią. Wieczór 7.11 powtórzył to piętro wyżej: stacja zdalna zatrzymała się na założeniu sesji. Lustro jest tu wierne — w obu przypadkach gest właściciela był najtańszym elementem układu i jedynym, którego nie wolno zautomatyzować.</div>
+</section>
+
+<svg class="puls" viewBox="0 0 760 24" aria-hidden="true"><polyline points="0,12 300,12 318,12 326,3 334,21 342,6 350,12 760,12" fill="none" class="s-tetno" stroke-width="2"/></svg>
+<section class="odczyt">
+ <div class="num">Odczyt 4</div>
+ <h2>Czy organizm jest w pełni zdrowy</h2>
+ <p class="pod">Werdykt z pomiaru, nie z nadziei: dziewięć kryteriów, każde z dowodem albo bez.</p>
+ <div class="kanal"><div><b>Nadawca</b>rejestr organów, cc-panel</div><div><b>Odbiorca</b>właściciel</div><div><b>Kanał</b>mapa 735 co godzinę</div><div><b>Opóźnienie</b>do 60 minut za ciałem</div></div>
+ 
+<div class="werdykt">
+ <svg viewBox="0 0 200 200" class="ring" role="img" aria-label="0 z 9 kryteriów z dowodem"><circle cx="100" cy="100" r="78" fill="none" class="s-gest" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="0.0" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-line" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-54.5" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-gest" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-108.9" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-gest" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-163.4" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-line" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-217.8" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-line" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-272.3" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-line" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-326.7" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-line" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-381.2" transform="rotate(-90 100 100)"/><circle cx="100" cy="100" r="78" fill="none" class="s-gest" stroke-width="16" stroke-dasharray="50.5 439.6" stroke-dashoffset="-435.6" transform="rotate(-90 100 100)"/><text x="100" y="96" class="t-big" text-anchor="middle">0/9</text><text x="100" y="122" class="t-mono" text-anchor="middle">dowodów</text></svg>
+ <div class="wtekst">
+  <b>WERDYKT · 20:15</b>
+  <h3>Nie — organizm pracuje nad sobą</h3>
+  <p class="mono small">0 kryteriów z dowodem · 4 w ruchu · 5 nie zmierzono</p>
+  <p>Ruch widoczny z zewnątrz (mapa 20:08): owijki z-bolem na złomie 7/9, na ryzenie zniknął wiersz „bez owijki”, timer pomysly-kworum na ryzenie. Nadal: sonda sąsiada BRAK DOWODU, 36/72 i 6/10 kontenerów bez sondy zdrowia.</p>
+  <p class="small"><b>Następny pomiar:</b> po meldunku końcowym S0 — depesza zostanie nadpisana pod tym samym kluczem, z dowodami Z1–Z9 (polecenie, wynik, godzina).</p>
+ </div>
+</div>
+ <table><thead><tr><th>#</th><th>kryterium</th><th>stan 20:15</th><th>dowód / komentarz</th></tr></thead><tbody><tr><td class="mono">Z1</td><td>14 mechanizmów działa w ciele</td><td><span class="kropka k-ruch"></span>w ruchu</td><td class="small">mapa 20:08: na ryzenie pojawił się timer pomysly-kworum (jeszcze bez przebiegu); sonda-sasiada nadal brak</td></tr><tr><td class="mono">Z2</td><td>hub: wiek faktów i ból szyny (MR !59)</td><td><span class="kropka k-niezmierzone"></span>nie zmierzono</td><td class="small">GitLab poza zasięgiem stacji zdalnej — zmierzy S0 w STATUS.md</td></tr><tr><td class="mono">Z3</td><td>ryzen czuwa nad złomem; kolejka i kworum na obu ciałach</td><td><span class="kropka k-ruch"></span>w ruchu</td><td class="small">kworum: timer jest; sonda sąsiada: BRAK DOWODU („brak timera sonda-sasiada”); kolejka hub-notify: nie zmierzono</td></tr><tr><td class="mono">Z4</td><td>każda linia crona z owijką z-bolem</td><td><span class="kropka k-ruch"></span>w ruchu</td><td class="small">złom 2 z 9 bez owijki (19:08: 9 z 9); ryzen — wiersz „bez owijki” zniknął z mapy (19:08: 13 z 13)</td></tr><tr><td class="mono">Z5</td><td>brama grafu w settings.json złoma</td><td><span class="kropka k-niezmierzone"></span>nie zmierzono</td><td class="small">widoczne tylko z diagnostyki startu sesji na złomie</td></tr><tr><td class="mono">Z6</td><td>luki priorytetu 3 z mechanizmem i testem</td><td><span class="kropka k-niezmierzone"></span>nie zmierzono</td><td class="small">MR-y S3/S1 — po recenzji S0</td></tr><tr><td class="mono">Z7</td><td>luki priorytetu 4: mechanizm albo zmierzony powód</td><td><span class="kropka k-niezmierzone"></span>nie zmierzono</td><td class="small">S2 (L12, L18, L17), S3 (L19, L21), S4 (L20), S1 (L23)</td></tr><tr><td class="mono">Z8</td><td>rdzeń mówi prawdę</td><td><span class="kropka k-niezmierzone"></span>nie zmierzono</td><td class="small">zdanie o sprzeciwie szyny, bramki-celowo.json — S3</td></tr><tr><td class="mono">Z9</td><td>stan widoczny bez transkryptów</td><td><span class="kropka k-ruch"></span>w ruchu</td><td class="small">ta depesza + STATUS.md (po pierwszym MR S0) + fakty organizm/zdrowie/*</td></tr></tbody></table>
+ <p>Odpowiedź brzmi <strong>nie</strong> — i nie mogłaby brzmieć inaczej dwadzieścia minut po starcie sesji. Zdrowie w tym planie nie jest deklaracją ukończenia, tylko dziewięcioma pomiarami, z których dziś żaden nie ma pełnego dowodu, cztery są w ruchu widocznym z zewnątrz, a pięć czeka na meldunek S0. Najbliższy twardy sygnał to nerw „sonda sąsiada” na mapie: gdy zmieni BRAK DOWODU na KANAŁ Z DOWODEM, ryzen zacznie czuwać nad złomem i zamknie się pierwsza z luk, które raport 725 nazwał najtańszymi.</p>
+ <div class="zapis"><div class="tyt">Zapis nasłuchu · co zmierzy następny pomiar</div>
+mapa 735 (co godzinę): nerw sonda sąsiada · linie crona bez owijki (cel 0/9 i 0/13) · timery L4/L5/L7 z przebiegiem · kontenery bez sondy zdrowia (poza planem, ale liczone)<br>
+STATUS.md w perun/organizm (po MR S0): Z1–Z9 z poleceniem, wynikiem i godziną · fakt szyny organizm/zdrowie/stan (klasa stan)<br>
+cc-panel: sesje kończą się meldunkiem na „organizm”; sesja w stanie CZEKA dłużej niż 2 h = pytanie bez odbiorcy — do zajrzenia z telefonu</div>
+ <p class="wnosi"><strong>Co stacja z tego wnosi:</strong> plan był tani, bo nie wymyślał floty na nowo — przepisał luki z raportów na dowody i rozdał je po ciałach. Wykonanie ruszyło w ciągu czterech minut od chwili, gdy właściciel zrobił jedyny gest, którego nie dało się zastąpić. Organizm nie jest dziś zdrowy; jest w trakcie konsolidacji, którą po raz pierwszy widać z zewnątrz w liczbach mapy, nie w transkryptach. Werdykt „tak” będzie miał w tej depeszy dziewięć wierszy z poleceniem i godziną — albo go nie będzie.</p>
+</section>
+
+<svg class="puls" viewBox="0 0 760 24" aria-hidden="true"><polyline points="0,12 300,12 318,12 326,3 334,21 342,6 350,12 760,12" fill="none" class="s-tetno" stroke-width="2"/></svg>
+<section class="odczyt">
+ <div class="num">Odnośniki</div>
+ <h2>Raporty i miejsca</h2>
+ <table><thead><tr><th>nr</th><th>raport</th><th>link</th></tr></thead><tbody>
+ <tr><td class="mono">725</td><td>Organizm floty — pełny protokół</td><td><a href="https://ai-review-panel.kodownik.co/r/__RW_Ojg4xvvVlMa0YOuv_lPaT6gEjo5g0nbtmVzvHY">/r/__RW_Ojg…</a></td></tr>
+ <tr><td class="mono">731</td><td>Organizm floty — skrót</td><td><a href="https://ai-review-panel.kodownik.co/r/Gqnv355W9Dqv5eIywtnO6UBQAwNMdjrR6gRZphUWw84">/r/Gqnv355W…</a></td></tr>
+ <tr><td class="mono">735</td><td>Mapa floty (rejestr organów)</td><td><a href="https://ai-review-panel.kodownik.co/r/gQ6i5wi2FzVOYBNvrECESI1FkRdC6cHckd93U6H83i8">/r/gQ6i5wi2…</a></td></tr>
+ <tr><td class="mono">734</td><td>Doskonała próżnia floty</td><td><a href="https://ai-review-panel.kodownik.co/r/Q3PAjcH4XbqymTPydXkohF69jvDuSSX8E_c8UalJNJ4">/r/Q3PAjcH4…</a></td></tr>
+ <tr><td class="mono">633</td><td>Warstwy pamięci floty</td><td><a href="https://ai-review-panel.kodownik.co/r/M7ogYDjotQeQW4W5-QNvG3Fk0OPuYcIPlUR_DoS8S8I">/r/M7ogYDjo…</a></td></tr>
+ <tr><td class="mono">695</td><td>Wzgórze — brama pamięci floty</td><td><a href="https://ai-review-panel.kodownik.co/r/PwgyzrezuByNKXbq8_gAthoHWo1YcJEXq0JBrs-kq0E">/r/Pwgyzrez…</a></td></tr>
+ <tr><td class="mono">703</td><td>Brama i graf</td><td><a href="https://ai-review-panel.kodownik.co/r/LjU72BAGDFavDhkUYc0MZy69R2NX7TqU0R64gZH0oN8">/r/LjU72BAG…</a></td></tr>
+ <tr><td class="mono">369</td><td>Flota od zewnątrz — audyt 17.10</td><td><a href="https://ai-review-panel.kodownik.co/r/05zpfNxr7L0h0lpkmYnEMYQA5q-xvsPuHXoEQsIhiTg">/r/05zpfNxr…</a></td></tr>
+ <tr><td class="mono">641 · 604 · 364 · 345 · 344 · 308 · 206 · 136 · 146</td><td>pamięć od zera · sójka i orzechówka · grzybnia · zalewy · strażnik zalewu · wewnętrzne życie maszyn · trzy warstwy · warstwy złoma · thalamos</td><td>pełna lista w <code>docs/zdrowie/ODNOSNIKI.md</code> (perun/organizm, MR S0)</td></tr>
+ </tbody></table>
+ <p class="small">Repozytoria i miejsca: <code>perun/organizm</code> (rejestr organów, docs/luki.md, mechanizmy/REJESTR.md), <code>perun/mcp-hub</code> MR !59, <code>claude-config</code> (bin/*, hooks/*), karta MISC-55, cc-panel <a href="https://cc.kodownik.co">cc.kodownik.co</a>, pliki wdrożenia <code>/mnt/fast/claude-tmp/organizm/wdrozenie/</code> na złomie.</p>
+</section>
+
+<p class="stopka">Stacja zdalna · depesza · 7 listopada 2026, 20:15 · styl ustrój (jawa / sen) — paleta: tętno (dowód), gest (w ruchu), brak (bez dowodu), nerw (kanały); liczby pochodzą z mapy floty 735 (pomiar 20:08) i cc-panel (20:15), nie z meldunków sesji. Ta depesza jest nadpisywana pod tym samym kluczem po każdym pomiarze.</p>
+<script>
+(function(){var k='ustroj-motyw',h=document.documentElement,b=document.getElementById('motyw');
+function cur(){return h.getAttribute('data-motyw')||(matchMedia('(prefers-color-scheme: dark)').matches?'sen':'jawa');}
+function lab(){b.textContent=(cur()==='sen'?'☾ sen':'☼ jawa')+' · przełącz';}
+try{var s=localStorage.getItem(k);if(s==='sen'||s==='jawa')h.setAttribute('data-motyw',s);}catch(e){}
+lab();b.addEventListener('click',function(){var n=cur()==='sen'?'jawa':'sen';h.setAttribute('data-motyw',n);try{localStorage.setItem(k,n);}catch(e){}lab();});})();
+</script>
+</body>
+</html>

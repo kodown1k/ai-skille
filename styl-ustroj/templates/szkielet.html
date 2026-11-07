@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Depesza: {{TYTUŁ}}</title>
+<style>
+/* wklej zawartość templates/ustroj.css */
+</style>
+</head>
+<body>
+<div class="pasek"><span>depesza · styl ustrój</span><button id="motyw" type="button">motyw</button></div>
+<h1>{{TYTUŁ}}</h1>
+<p class="lead">{{JEDNO ZDANIE: o czym i skąd patrzy nadawca}}</p>
+
+<dl class="depesza">
+ <dt>Nadawca</dt><dd>{{kto, skąd, kiedy}}</dd>
+ <dt>Adresat</dt><dd>{{dla kogo}}</dd>
+ <dt>Dotyczy</dt><dd>{{zlecenie / pytanie}}</dd>
+ <dt>Źródła</dt><dd>{{raporty, repo, pomiary}}</dd>
+ <dt>Stan na</dt><dd>{{data, godzina pomiaru (skąd)}}</dd>
+</dl>
+
+<svg class="puls" viewBox="0 0 760 24" aria-hidden="true"><polyline points="0,12 300,12 318,12 326,3 334,21 342,6 350,12 760,12" fill="none" class="s-tetno" stroke-width="2"/></svg>
+<section class="odczyt">
+ <div class="num">Odczyt 1</div>
+ <h2>{{Tytuł odczytu}}</h2>
+ <p class="pod">{{Jedno zdanie, kursywa: co ten odczyt rozstrzyga.}}</p>
+ <div class="kanal"><div><b>Nadawca</b>{{…}}</div><div><b>Odbiorca</b>{{…}}</div><div><b>Kanał</b>{{…}}</div><div><b>Opóźnienie</b>{{…}}</div></div>
+ <p>{{Treść.}}</p>
+
+ <!-- oś czasu -->
+ <ol class="oscz">
+  <li class="tetno"><span class="t">19:26</span><span class="l">{{zdarzenie z dowodem}}</span></li>
+  <li class="brak"><span class="t">19:50</span><span class="l">{{ściana / odmowa}}</span></li>
+  <li><span class="t">20:15</span><span class="l">{{zdarzenie neutralne}}</span></li>
+ </ol>
+
+ <!-- tablica kryteriów -->
+ <div class="tablica">
+  <div class="cell c-dowod"><span class="kropka k-dowod"></span><b>Z1</b><span class="st">dowód</span><p>{{kryterium}}</p></div>
+  <div class="cell c-ruch"><span class="kropka k-ruch"></span><b>Z2</b><span class="st">w ruchu</span><p>{{kryterium}}</p></div>
+  <div class="cell c-brak"><span class="kropka k-brak"></span><b>Z3</b><span class="st">brak</span><p>{{kryterium}}</p></div>
+  <div class="cell c-niezmierzone"><span class="kropka k-niezmierzone"></span><b>Z4</b><span class="st">nie zmierzono</span><p>{{kryterium}}</p></div>
+ </div>
+
+ <div class="zapis"><div class="tyt">Zapis nasłuchu · {{źródło i godzina}}</div>
+{{liczba · polecenie · wynik}}<br>
+{{liczba · polecenie · wynik}}</div>
+
+ <div class="lustro"><b>Lustro · {{nazwa analogii}}</b>{{Co analogia oświetla.}} Lustro kłamie w jednym: {{gdzie przestaje nieść prawdę}}.</div>
+ <p class="wnosi"><strong>Co stacja z tego wnosi:</strong> {{jedno–trzy zdania}}</p>
+</section>
+
+<svg class="puls" viewBox="0 0 760 24" aria-hidden="true"><polyline points="0,12 300,12 318,12 326,3 334,21 342,6 350,12 760,12" fill="none" class="s-tetno" stroke-width="2"/></svg>
+<section class="odczyt">
+ <div class="num">Odnośniki</div>
+ <h2>Raporty i miejsca</h2>
+ <table><thead><tr><th>nr</th><th>raport</th><th>link</th></tr></thead><tbody>
+ <tr><td class="mono">{{nr}}</td><td>{{tytuł}}</td><td><a href="{{url}}">{{/r/…}}</a></td></tr>
+ </tbody></table>
+</section>
+
+<p class="stopka">{{Nadawca}} · depesza · {{data, godzina}} · styl ustrój (jawa / sen) — liczby pochodzą z {{źródła pomiaru}}; nadpisywana pod tym samym kluczem po każdym pomiarze.</p>
+<script>
+/* wklej zawartość templates/motyw.js */
+</script>
+</body>
+</html>
